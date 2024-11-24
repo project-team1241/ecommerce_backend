@@ -1,8 +1,9 @@
 package com.project.ecommerce.service;
 
-import com.project.ecommerce.model.Users;
+import com.project.ecommerce.model.User;
 import com.project.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,24 +15,36 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // Get all users
-    public List<Users> getAllUsers() {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // Get user by email id (Primary Key)
-    public Optional<Users> getUserByEmailId(String emailId) {
-        return userRepository.findById(emailId);
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByUserEmailId(email); // Query by email ID
     }
 
-    // Create or Update user
-    public Users saveUser(Users user) {
+    public User createUser(User user) {
+        user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         return userRepository.save(user);
     }
 
-    // Delete user
-    public void deleteUser(String emailId) {
-        userRepository.deleteById(emailId);
+    public User updateUserByEmail(String email, User updatedUser) {
+        return userRepository.findByUserEmailId(email)
+                .map(existingUser -> {
+                    existingUser.setUserName(updatedUser.getUsername());
+                    existingUser.setUserPassword(passwordEncoder.encode(updatedUser.getUserPassword()));
+                    return userRepository.save(existingUser);
+                })
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    }
+
+    public void deleteUserByEmail(String email) {
+        userRepository.findByUserEmailId(email)
+                .ifPresentOrElse(userRepository::delete, () -> {
+                    throw new RuntimeException("User not found with email: " + email);
+                });
     }
 }
-
