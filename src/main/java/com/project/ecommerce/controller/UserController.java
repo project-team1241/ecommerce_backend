@@ -1,6 +1,6 @@
 package com.project.ecommerce.controller;
 
-import com.project.ecommerce.model.Users;
+import com.project.ecommerce.model.User;
 import com.project.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,32 +18,32 @@ public class UserController {
 
     // Get all users
     @GetMapping
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     // Get user by email ID
     @GetMapping("/{emailId}")
-    public ResponseEntity<Users> getUserByEmailId(@PathVariable String emailId) {
-        Optional<Users> user = userService.getUserByEmailId(emailId);
+    public ResponseEntity<User> getUserByEmailId(@PathVariable String emailId) {
+        Optional<User> user = userService.getUserByEmailId(emailId);
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Create a new user
     @PostMapping
-    public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        Users savedUser = userService.saveUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User savedUser = userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     // Update an existing user
     @PutMapping("/{emailId}")
-    public ResponseEntity<Users> updateUser(@PathVariable String emailId, @RequestBody Users user) {
-        Optional<Users> existingUser = userService.getUserByEmailId(emailId);
+    public ResponseEntity<User> updateUser(@PathVariable String emailId, @RequestBody User user) {
+        Optional<User> existingUser = userService.getUserByEmailId(emailId);
         if (existingUser.isPresent()) {
             user.setUserEmailId(emailId); // Ensure the emailId doesn't change
-            Users updatedUser = userService.saveUser(user);
+            User updatedUser = userService.saveUser(user);
             return ResponseEntity.ok(updatedUser);
         } else {
             return ResponseEntity.notFound().build();
@@ -53,7 +53,7 @@ public class UserController {
     // Delete a user
     @DeleteMapping("/{emailId}")
     public ResponseEntity<Void> deleteUser(@PathVariable String emailId) {
-        Optional<Users> existingUser = userService.getUserByEmailId(emailId);
+        Optional<User> existingUser = userService.getUserByEmailId(emailId);
         if (existingUser.isPresent()) {
             userService.deleteUser(emailId);
             return ResponseEntity.noContent().build();
