@@ -1,6 +1,6 @@
 package com.project.ecommerce.service;
 
-import com.project.ecommerce.model.Users;
+import com.project.ecommerce.model.User;
 import com.project.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +15,17 @@ public class UserService {
     private UserRepository userRepository;
 
     // Get all users
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     // Get user by email id (Primary Key)
-    public Optional<Users> getUserByEmailId(String emailId) {
+    public Optional<User> getUserByEmailId(String emailId) {
         return userRepository.findById(emailId);
     }
 
     // Create or Update user
-    public Users saveUser(Users user) {
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
