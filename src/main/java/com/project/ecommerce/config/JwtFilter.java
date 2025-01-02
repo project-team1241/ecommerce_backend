@@ -30,6 +30,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        response.setContentType("application/json");
+
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String userName = null;
@@ -39,7 +42,6 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 userName = jwtService.extractUserName(token);
             } catch (JwtException ex) {
-                response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write(Message.getErrorMsg(ex.getMessage()));
 

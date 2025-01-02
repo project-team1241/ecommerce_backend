@@ -33,9 +33,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // Get user by email id (Primary Key)
     public Optional<Users> getUserByEmailId(String emailId) {
         return userRepository.findByUserEmailId(emailId);
+    }
+
+    public Users getUserByUserName(String userName) {
+        return  userRepository.findByUserName(userName);
     }
 
     // Create or Update user
@@ -45,7 +48,7 @@ public class UserService {
 
     // Delete user
     public void deleteUser(String emailId) {
-        userRepository.deleteById(emailId);
+        userRepository.deleteByUserEmailId(emailId);
     }
 
     public ResponseEntity<Object> verify(Users user) {
@@ -74,6 +77,10 @@ public class UserService {
                 .status(HttpStatus.UNAUTHORIZED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Message.getErrorMsg("Wrong username or password"));
+    }
+
+    public Users getUserById(int userId) {
+        return null;
     }
 }
 

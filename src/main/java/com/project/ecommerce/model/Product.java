@@ -1,5 +1,6 @@
 package com.project.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +11,14 @@ import lombok.Setter;
 @Table(name = "product_table")
 public class Product {
     @Id
-    @Column(name = "products_id")
+    @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int productId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false) // Foreign key to Users table
+    @JsonBackReference // Break the circular reference here
+    private Users seller;
 
     @Column(name = "product_name")
     private String productName;
@@ -43,4 +49,7 @@ public class Product {
 
     @Column(name = "product_rating")
     private String productRating;
+
+    @Column(name = "product_quantity")
+    private long productQuantity;
 }

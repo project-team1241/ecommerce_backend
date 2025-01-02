@@ -41,8 +41,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/v1/register", "/v1/login","/v1/products")
-                        .permitAll()
+                        .requestMatchers("/v1/register", "/v1/login", "/v1/products").permitAll()
+                        .requestMatchers("/v1/request/seller/**").hasRole("USER")
+                        .requestMatchers(
+                                "/v1/approve/seller/**",
+                                "/v1/admin/**",
+                                "/v1/reject/seller/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/seller/**").hasRole("SELLER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->
