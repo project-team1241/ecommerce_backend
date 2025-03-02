@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ads Page</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    img {
+        width: 100px;
+        height: auto;
+    }
+  </style>
+</head>
+<body>
+<h1>Advertisements</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Ad ID</th>
+    <th>Ad Type</th>
+    <th>Image (Large)</th>
+    <th>Image (Medium)</th>
+    <th>Image (Thumbnail)</th>
+    <th>Product</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="ad : ${ads}">
+    <td th:text="${ad.adId}"></td>
+    <td th:text="${ad.adType}"></td>
+    <td><img th:src="${ad.adImageL}" alt="Large Ad Image"></td>
+    <td><img th:src="${ad.adImageM}" alt="Medium Ad Image"></td>
+    <td><img th:src="${ad.adImageT}" alt="Thumbnail Ad Image"></td>
+    <td th:text="${ad?.product != null ? ad.product.name : 'No Product'}"></td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
