@@ -3,7 +3,6 @@ name: Login API Every 5 Minutes
 on:
   schedule:
     - cron: "*/5 * * * *"  # every 5 minutes
-  workflow_dispatch:       # allows manual triggering too
 
 jobs:
   post_login:
