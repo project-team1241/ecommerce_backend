@@ -1,5 +1,7 @@
 # 🌟 E-Commerce Backend  
 
+[![Maven Build](https://github.com/project-team1241/ecommerce_backend/actions/workflows/maven-build.yml/badge.svg?event=push)](https://github.com/project-team1241/ecommerce_backend/actions/workflows/maven-build.yml)
+
 ![Project Logo](https://via.placeholder.com/728x90.png?text=E-Commerce+Backend)  
 
 An advanced **Spring Boot** backend application for e-commerce platforms. This project implements secure authentication and authorization using **JWT**, **OAuth**, and **Spring Security**, and is ready for scalable deployments using Docker.  
