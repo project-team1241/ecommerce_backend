@@ -72,7 +72,7 @@ public class UserService {
             );
             if (authentication.isAuthenticated()) {
                 String token = jwtService.generateToken(loginRequest.getUserName());
-                String userRole = userRepository.findByUserName(loginRequest.getUserName()).getUserRole();
+                String userRole = userRepository.findByUserName(loginRequest.getUserName()).getUserRole().toLowerCase();
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)

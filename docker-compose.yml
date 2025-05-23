@@ -1,6 +1,7 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+    image: user0549/ecappp
     ports:
       - "8080:8080"
-    environment:
