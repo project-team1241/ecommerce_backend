@@ -72,10 +72,11 @@ public class UserService {
             );
             if (authentication.isAuthenticated()) {
                 String token = jwtService.generateToken(loginRequest.getUserName());
+                String userRole = userRepository.findByUserName(loginRequest.getUserName()).getUserRole();
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(Message.getTokenMsg(token));
+                        .body(Message.getTokenMsg(token,userRole));
             }
         } catch (BadCredentialsException e) {
             return ResponseEntity
